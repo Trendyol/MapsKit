@@ -1,0 +1,53 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'maven-publish'
+}
+
+group='com.trendyol.mapskit'
+version = '1.0'
+
+android {
+    compileSdkVersion 30
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "0.1.0"
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+
+    buildTypes {
+
+        release {
+            minifyEnabled = false
+        }
+
+        debug {
+            minifyEnabled = false
+        }
+    }
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "com.google.android.gms:play-services-maps:17.0.1"
+    implementation "com.huawei.hms:maps:5.2.0.301"
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.trendyol.mapskit'
+                artifactId = 'mapskit'
+                version = '1.0'
+            }
+        }
+    }
+}
