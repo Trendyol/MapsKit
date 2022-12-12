@@ -5,5 +5,6 @@ import android.graphics.Bitmap
 data class MarkerOptions(
     val position: LatLng,
     val draggable: Boolean,
-    val bitmap: Bitmap?
+    val bitmap: Bitmap?,
+    val title: String? = null,
 )
