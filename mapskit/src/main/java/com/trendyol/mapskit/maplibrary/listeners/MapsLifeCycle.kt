@@ -2,7 +2,7 @@ package com.trendyol.mapskit.maplibrary.listeners
 
 import android.os.Bundle
 
-interface IMapsLifeCycle {
+interface MapsLifeCycle {
 
     fun onSaveInstanceState(bundle: Bundle)
     fun onStart()

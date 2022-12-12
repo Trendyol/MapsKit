@@ -10,7 +10,7 @@ import com.huawei.hms.maps.HuaweiMapOptions
 import com.huawei.hms.maps.MapView
 import com.huawei.hms.maps.MapsInitializer
 import com.huawei.hms.maps.OnMapReadyCallback
-import com.trendyol.mapskit.maplibrary.listeners.IMapsLifeCycle
+import com.trendyol.mapskit.maplibrary.listeners.MapsLifeCycle
 import com.trendyol.mapskit.maplibrary.listeners.IOnCameraIdleListener
 import com.trendyol.mapskit.maplibrary.listeners.IOnCameraMoveStartedListener
 import com.trendyol.mapskit.maplibrary.listeners.IOnMapClickListener
@@ -25,7 +25,7 @@ import com.trendyol.mapskit.maplibrary.model.MarkerOptions
 class HuaweiMapsOperations(context: Context) :
     Map,
     OnMapReadyCallback,
-    IMapsLifeCycle {
+    MapsLifeCycle {
 
     private lateinit var huaweiMap: HuaweiMap
     private var mapView: MapView? = null
