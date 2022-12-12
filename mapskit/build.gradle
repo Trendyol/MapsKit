@@ -30,12 +30,13 @@ android {
             minifyEnabled = false
         }
     }
+    namespace 'com.trendyol.mapskit'
 }
 
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "com.google.android.gms:play-services-maps:17.0.1"
+    implementation "com.google.android.gms:play-services-maps:17.0.0"
     implementation "com.huawei.hms:maps:6.5.1.300"
 }
 
