@@ -104,6 +104,10 @@ class MapView : FrameLayout, Map, IMapsLifeCycle {
         mapOperation.setOnCameraMoveStartedListener(onCameraMoveStartedListener)
     }
 
+    override fun setLiteMode(isLiteModeEnabled: Boolean) {
+        mapOperation.setLiteMode(isLiteModeEnabled)
+    }
+
     override fun addMarker(markerOptions: MarkerOptions, tag: Any?): Marker? {
         return mapOperation.addMarker(markerOptions, tag)
     }

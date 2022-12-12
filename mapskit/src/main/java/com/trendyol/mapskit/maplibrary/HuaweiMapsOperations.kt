@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresPermission
 import com.huawei.hms.maps.HuaweiMap
+import com.huawei.hms.maps.HuaweiMapOptions
 import com.huawei.hms.maps.MapView
 import com.huawei.hms.maps.OnMapReadyCallback
 import com.trendyol.mapskit.maplibrary.listeners.IMapsLifeCycle
@@ -29,6 +30,7 @@ class HuaweiMapsOperations(context: Context) :
     private var mapView: MapView? = null
     private lateinit var onMapReadyListener: IOnMapReadyCallback
     private val cameraUpdateProvider = HuaweiCameraUpdateProvider()
+    private var isLiteModeEnabled: Boolean? = null
 
     init {
         mapView = MapView(context)
@@ -127,6 +129,15 @@ class HuaweiMapsOperations(context: Context) :
         val huaweiMarker = huaweiMap.addMarker(markerOptions.toHuaweiMarkerOptions()) ?: return null
         huaweiMarker.tag = tag
         return huaweiMarker.toMapsKitMarker()
+    }
+
+    override fun setLiteMode(isLiteModeEnabled: Boolean) {
+        if (::huaweiMap.isInitialized) {
+            val options = HuaweiMapOptions().liteMode(isLiteModeEnabled)
+            huaweiMap.mapType = options.mapType
+        } else {
+            this.isLiteModeEnabled = isLiteModeEnabled
+        }
     }
 
     override fun clear() {

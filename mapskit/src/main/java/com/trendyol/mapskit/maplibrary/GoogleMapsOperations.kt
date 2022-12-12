@@ -6,15 +6,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresPermission
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.trendyol.mapskit.maplibrary.listeners.IMapsLifeCycle
 import com.trendyol.mapskit.maplibrary.listeners.IOnCameraIdleListener
 import com.trendyol.mapskit.maplibrary.listeners.IOnCameraMoveStartedListener
 import com.trendyol.mapskit.maplibrary.listeners.IOnMapClickListener
 import com.trendyol.mapskit.maplibrary.listeners.IOnMapLoadedCallback
 import com.trendyol.mapskit.maplibrary.listeners.IOnMapReadyCallback
 import com.trendyol.mapskit.maplibrary.listeners.IOnMarkerClickListener
+import com.trendyol.mapskit.maplibrary.listeners.IMapsLifeCycle
 import com.trendyol.mapskit.maplibrary.model.CameraPosition
 import com.trendyol.mapskit.maplibrary.model.Marker
 import com.trendyol.mapskit.maplibrary.model.MarkerOptions
@@ -28,6 +29,7 @@ class GoogleMapsOperations(context: Context) :
     private var mapView: MapView? = null
     private lateinit var onMapReadyListener: IOnMapReadyCallback
     private val cameraUpdateProvider = GoogleCameraUpdateProvider()
+    private var isLiteModeEnabled: Boolean? = null
 
     init {
         mapView = MapView(context)
@@ -35,6 +37,7 @@ class GoogleMapsOperations(context: Context) :
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
+        isLiteModeEnabled?.let { setLiteMode(it) }
         onMapReadyListener.onMapReady(this)
     }
 
@@ -128,6 +131,15 @@ class GoogleMapsOperations(context: Context) :
         return googleMarker.toMapsKitMarker()
     }
 
+    override fun setLiteMode(isLiteModeEnabled: Boolean) {
+        if (::googleMap.isInitialized) {
+            val options = GoogleMapOptions().liteMode(isLiteModeEnabled)
+            googleMap.mapType = options.mapType
+        } else {
+            this.isLiteModeEnabled = isLiteModeEnabled
+        }
+    }
+
     override fun clear() {
         googleMap.clear()
     }
@@ -159,5 +171,4 @@ class GoogleMapsOperations(context: Context) :
     override fun onLowMemory() {
         mapView?.onLowMemory()
     }
-
 }
