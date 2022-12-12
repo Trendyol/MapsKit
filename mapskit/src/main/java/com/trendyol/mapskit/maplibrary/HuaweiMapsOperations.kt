@@ -8,6 +8,7 @@ import androidx.annotation.RequiresPermission
 import com.huawei.hms.maps.HuaweiMap
 import com.huawei.hms.maps.HuaweiMapOptions
 import com.huawei.hms.maps.MapView
+import com.huawei.hms.maps.MapsInitializer
 import com.huawei.hms.maps.OnMapReadyCallback
 import com.trendyol.mapskit.maplibrary.listeners.IMapsLifeCycle
 import com.trendyol.mapskit.maplibrary.listeners.IOnCameraIdleListener
@@ -34,10 +35,12 @@ class HuaweiMapsOperations(context: Context) :
 
     init {
         mapView = MapView(context)
+        MapsInitializer.initialize(context)
     }
 
     override fun onMapReady(map: HuaweiMap) {
         huaweiMap = map
+        isLiteModeEnabled?.let { setLiteMode(it) }
         onMapReadyListener.onMapReady(this)
     }
 
