@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
-import com.trendyol.mapskit.maplibrary.listeners.IMapsLifeCycle
+import com.trendyol.mapskit.maplibrary.listeners.MapsLifeCycle
 import com.trendyol.mapskit.maplibrary.listeners.IOnCameraIdleListener
 import com.trendyol.mapskit.maplibrary.listeners.IOnCameraMoveStartedListener
 import com.trendyol.mapskit.maplibrary.listeners.IOnMapClickListener
@@ -17,7 +17,7 @@ import com.trendyol.mapskit.maplibrary.model.CameraPosition
 import com.trendyol.mapskit.maplibrary.model.Marker
 import com.trendyol.mapskit.maplibrary.model.MarkerOptions
 
-class MapView : FrameLayout, Map, IMapsLifeCycle {
+class MapView : FrameLayout, Map, MapsLifeCycle {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -126,31 +126,31 @@ class MapView : FrameLayout, Map, IMapsLifeCycle {
     }
 
     override fun onSaveInstanceState(bundle: Bundle) {
-        (mapOperation as IMapsLifeCycle).onSaveInstanceState(bundle)
+        (mapOperation as MapsLifeCycle).onSaveInstanceState(bundle)
     }
 
     override fun onStart() {
-        (mapOperation as IMapsLifeCycle).onStart()
+        (mapOperation as MapsLifeCycle).onStart()
     }
 
     override fun onResume() {
-        (mapOperation as IMapsLifeCycle).onResume()
+        (mapOperation as MapsLifeCycle).onResume()
     }
 
     override fun onPause() {
-        (mapOperation as IMapsLifeCycle).onPause()
+        (mapOperation as MapsLifeCycle).onPause()
     }
 
     override fun onStop() {
-        (mapOperation as IMapsLifeCycle).onStop()
+        (mapOperation as MapsLifeCycle).onStop()
     }
 
     override fun onDestroy() {
-        (mapOperation as IMapsLifeCycle).onDestroy()
+        (mapOperation as MapsLifeCycle).onDestroy()
     }
 
     override fun onLowMemory() {
-        (mapOperation as IMapsLifeCycle).onLowMemory()
+        (mapOperation as MapsLifeCycle).onLowMemory()
     }
 
     companion object {

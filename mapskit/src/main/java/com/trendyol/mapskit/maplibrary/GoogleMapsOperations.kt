@@ -17,7 +17,7 @@ import com.trendyol.mapskit.maplibrary.model.MarkerOptions
 class GoogleMapsOperations(context: Context) :
     Map,
     OnMapReadyCallback,
-    IMapsLifeCycle {
+    MapsLifeCycle {
 
     private lateinit var googleMap: GoogleMap
     private var mapView: MapView? = null
