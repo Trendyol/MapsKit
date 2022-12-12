@@ -3,6 +3,7 @@ package com.trendyol.mapskit.maplibrary
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import com.trendyol.mapskit.maplibrary.listeners.IMapsLifeCycle
@@ -33,6 +34,14 @@ class MapView : FrameLayout, Map, IMapsLifeCycle {
     init {
         val view: View? = mapOperation.getMapView()
         addView(view)
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        when (ev.action) {
+            MotionEvent.ACTION_UP -> parent.requestDisallowInterceptTouchEvent(false)
+            MotionEvent.ACTION_DOWN -> parent.requestDisallowInterceptTouchEvent(true)
+        }
+        return super.dispatchTouchEvent(ev)
     }
 
     override fun onCreate(bundle: Bundle?) {
