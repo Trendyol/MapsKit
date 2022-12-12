@@ -22,6 +22,7 @@ interface Map {
     fun setMyLocationButtonEnabled(isMyLocationButtonEnabled: Boolean)
     fun setMyLocationEnabled(isMyLocationEnabled: Boolean)
     fun setMinZoomPreference(zoomLevel: Float)
+    fun setLiteMode(isLiteModeEnabled: Boolean)
     fun setOnMapClickListener(onMapClickListener: IOnMapClickListener)
     fun animateCamera(cameraUpdate: CameraUpdate, duration: Int? = null)
     fun moveCamera(cameraUpdate: CameraUpdate)
