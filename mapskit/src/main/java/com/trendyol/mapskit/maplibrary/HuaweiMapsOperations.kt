@@ -96,7 +96,8 @@ class HuaweiMapsOperations(context: Context) :
     override fun getCameraPosition(): CameraPosition {
         val cameraPosition = huaweiMap.cameraPosition
         return CameraPosition(
-            LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude), cameraPosition.zoom
+            LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude),
+            cameraPosition.zoom
         )
     }
 
@@ -128,6 +129,7 @@ class HuaweiMapsOperations(context: Context) :
     override fun addMarker(markerOptions: MarkerOptions, tag: Any?): Marker? {
         val huaweiMarker = huaweiMap.addMarker(markerOptions.toHuaweiMarkerOptions()) ?: return null
         huaweiMarker.tag = tag
+        huaweiMarker.title = markerOptions.title
         return huaweiMarker.toMapsKitMarker()
     }
 

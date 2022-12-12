@@ -9,13 +9,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.trendyol.mapskit.maplibrary.listeners.IOnCameraIdleListener
-import com.trendyol.mapskit.maplibrary.listeners.IOnCameraMoveStartedListener
-import com.trendyol.mapskit.maplibrary.listeners.IOnMapClickListener
-import com.trendyol.mapskit.maplibrary.listeners.IOnMapLoadedCallback
-import com.trendyol.mapskit.maplibrary.listeners.IOnMapReadyCallback
-import com.trendyol.mapskit.maplibrary.listeners.IOnMarkerClickListener
-import com.trendyol.mapskit.maplibrary.listeners.IMapsLifeCycle
+import com.trendyol.mapskit.maplibrary.listeners.*
 import com.trendyol.mapskit.maplibrary.model.CameraPosition
 import com.trendyol.mapskit.maplibrary.model.Marker
 import com.trendyol.mapskit.maplibrary.model.MarkerOptions
@@ -128,6 +122,7 @@ class GoogleMapsOperations(context: Context) :
     override fun addMarker(markerOptions: MarkerOptions, tag: Any?): Marker? {
         val googleMarker = googleMap.addMarker(markerOptions.toGoogleMarkerOptions()) ?: return null
         googleMarker.tag = tag
+        googleMarker.title = markerOptions.title
         return googleMarker.toMapsKitMarker()
     }
 
