@@ -9,21 +9,19 @@ object AvailableServiceProvider {
 
     private var availableService: AvailableService? = null
 
+    /**
+     * Returns available service.
+     *
+     * If both Google and Huawei services are available or both API's are not available
+     * will return Google.
+     *
+     * @param context will be used to check available API.
+     */
     fun getAvailableService(context: Context): AvailableService {
-        if (availableService == null) {
-            availableService = when (ConnectionResult.SUCCESS) {
-                GoogleApiAvailability.getInstance()
-                    .isGooglePlayServicesAvailable(
-                        context
-                    ) -> AvailableService.GOOGLE
-                HuaweiApiAvailability.getInstance()
-                    .isHuaweiMobileServicesAvailable(
-                        context
-                    ) -> AvailableService.HUAWEI
-                else -> AvailableService.GOOGLE
-            }
-        }
-        return availableService ?: AvailableService.GOOGLE
+        return availableService ?: when (ConnectionResult.SUCCESS) {
+            GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context) -> AvailableService.GOOGLE
+            HuaweiApiAvailability.getInstance().isHuaweiMobileServicesAvailable(context) -> AvailableService.HUAWEI
+            else -> AvailableService.GOOGLE
+        }.also { availableService = it }
     }
-
 }
