@@ -8,11 +8,11 @@ class GoogleCameraUpdateProvider {
 
     fun provide(cameraUpdate: CameraUpdate): GoogleCameraUpdate {
         return when (cameraUpdate) {
-            is CameraUpdate.NewLatLng -> CameraUpdateFactory.newLatLng(cameraUpdate.latLng.toGoogleLatLng())
-            is CameraUpdate.NewLatLngZoom -> CameraUpdateFactory.newLatLngZoom(
+            is NewLatLng -> CameraUpdateFactory.newLatLng(cameraUpdate.latLng.toGoogleLatLng())
+            is NewLatLngZoom -> CameraUpdateFactory.newLatLngZoom(
                 cameraUpdate.latLng.toGoogleLatLng(), cameraUpdate.zoomLevel
             )
-            is CameraUpdate.NewLatLngBounds -> {
+            is NewLatLngBounds -> {
                 val latLngBounds = LatLngBounds.builder()
                     .apply { cameraUpdate.latLng.forEach { include(it.toGoogleLatLng()) } }
                     .build()
