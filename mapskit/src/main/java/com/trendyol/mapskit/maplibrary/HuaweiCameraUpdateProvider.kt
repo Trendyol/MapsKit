@@ -8,11 +8,11 @@ class HuaweiCameraUpdateProvider {
 
     fun provide(cameraUpdate: CameraUpdate): HuaweiCameraUpdate {
         return when (cameraUpdate) {
-            is CameraUpdate.NewLatLng -> CameraUpdateFactory.newLatLng(cameraUpdate.latLng.toHuaweiLatLng())
-            is CameraUpdate.NewLatLngZoom -> CameraUpdateFactory.newLatLngZoom(
+            is NewLatLng -> CameraUpdateFactory.newLatLng(cameraUpdate.latLng.toHuaweiLatLng())
+            is NewLatLngZoom -> CameraUpdateFactory.newLatLngZoom(
                 cameraUpdate.latLng.toHuaweiLatLng(), cameraUpdate.zoomLevel
             )
-            is CameraUpdate.NewLatLngBounds -> {
+            is NewLatLngBounds -> {
                 val latLngBounds = LatLngBounds.builder()
                     .apply { cameraUpdate.latLng.forEach { include(it.toHuaweiLatLng()) } }
                     .build()
