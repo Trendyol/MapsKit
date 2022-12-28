@@ -23,7 +23,7 @@ Add this dependency to your app-level build.gradle file.
 
 ```
 dependencies {
-        implementation 'com.github.Trendyol:MapsKit:1.0'
+        implementation 'com.github.Trendyol:MapsKit:1.2'
 }
 ```
 
