@@ -129,6 +129,10 @@ class HuaweiMapsOperations(context: Context) :
         }
     }
 
+    override fun setOnZoomControlsListener(isZoomControlsEnabled: Boolean) {
+        huaweiMap.uiSettings.isZoomControlsEnabled = isZoomControlsEnabled
+    }
+
     override fun addMarker(markerOptions: MarkerOptions, tag: Any?): Marker? {
         val huaweiMarker = huaweiMap.addMarker(markerOptions.toHuaweiMarkerOptions()) ?: return null
         huaweiMarker.tag = tag

@@ -7,6 +7,7 @@
     tools:context="com.trendyol.mapskitsample.MainActivity">
 
     <com.trendyol.mapskit.maplibrary.MapView
+        android:id="@+id/mapView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Hello World!"

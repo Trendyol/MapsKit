@@ -135,6 +135,10 @@ class GoogleMapsOperations(context: Context) :
         }
     }
 
+    override fun setOnZoomControlsListener(isZoomControlsEnabled: Boolean) {
+        googleMap.uiSettings.isZoomControlsEnabled = isZoomControlsEnabled
+    }
+
     override fun clear() {
         googleMap.clear()
     }

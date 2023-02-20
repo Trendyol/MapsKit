@@ -2,9 +2,14 @@ plugins {
     id 'com.android.application'
     id 'com.huawei.agconnect'
     id 'kotlin-android'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
+    viewBinding {
+        enabled = true
+    }
+
     compileSdkVersion 33
     buildToolsVersion "30.0.3"
 

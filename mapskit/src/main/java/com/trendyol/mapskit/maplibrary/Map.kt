@@ -31,6 +31,7 @@ interface Map {
     fun setOnMapLoadedCallback(onMapLoadedListener: IOnMapLoadedCallback)
     fun setOnCameraIdleListener(onCameraIdleListener: IOnCameraIdleListener)
     fun setOnCameraMoveStartedListener(onCameraMoveStartedListener: IOnCameraMoveStartedListener)
+    fun setOnZoomControlsListener(isZoomControlsEnabled: Boolean)
     fun addMarker(markerOptions: MarkerOptions, tag: Any?): Marker?
     fun clear()
 }
