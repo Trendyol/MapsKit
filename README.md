@@ -27,10 +27,98 @@ dependencies {
 }
 ```
 
-## Usage
-
 You'll still have to go through these steps at [HMS MapKit Codelab](https://developer.huawei.com/consumer/en/codelab/HMSMapKit/index.html#0) and [Google Add a map to your Android app](https://developers.google.com/codelabs/maps-platform/maps-platform-101-android#0)
 
+## Sample App Usage
+
+#### 1- Google Maps:
+Add a single line in local.properties that looks like
+
+```GOOGLE_MAPS_API_KEY=YOUR_KEY```
+
+#### 2- Huawei Maps:
+
+Follow the [codelab](https://developer.huawei.com/consumer/en/codelab/HMSMapKit/index.html#0), create the agconnect-services.json file and paste it under the "app" directory.
+
+
+#### 3- Build & Run
+
+
+## Library Usage
+
+#### 1- Google Maps:
+You can integrate Google api key in 2 ways.
+- 📌 a) Secret Gradle
+
+Advantage: You don't commit the api key directly to github repo.
+
+➡️ Add a single line in local.properties that looks like
+```GOOGLE_MAPS_API_KEY=YOUR_API_KEY```
+
+➡️ To be able to read this key from the AndroidManifest.xml,
+
+add this plugin in your app ```build.gradle```.
+
+```id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'```
+
+add this dependency in your project ```build.gradle```.
+
+```classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"```
+
+➡️ Read this GOOGLE_MAPS_API_KEY from AndroidManifest.xml
+```XML    
+<meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${GOOGLE_MAPS_API_KEY}" />
+```
+- 📌 b) AndroidManifest
+
+➡️ Add api key directly to AndroidManifest
+```XML    
+<meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="YOUR_API_KEY" />
+```
+
+#### 2- Huawei Maps:
+➡️ Configure project-level build.gradle:
+```
+allprojects {
+    repositories {
+            // Add the Maven address.
+            maven {url 'https://developer.huawei.com/repo/'}
+    }
+}
+...
+buildscript{
+    repositories {
+        // Add the Maven address.
+        maven { url 'https://developer.huawei.com/repo/' }
+    }
+    dependencies {
+        // Add dependencies.
+        classpath 'com.huawei.agconnect:agcp:1.5.2.300'
+    }
+}
+```
+➡️ Configure app-level build.gradle:
+```
+dependencies {
+    // Add dependencies.
+    implementation 'com.huawei.agconnect:agconnect-core:1.5.2.300'
+}
+...
+// Add the information to the bottom of the file.
+apply plugin: 'com.huawei.agconnect'
+
+```
+
+➡️ Follow the [codelab](https://developer.huawei.com/consumer/en/codelab/HMSMapKit/index.html#0), create the agconnect-services.json file and paste it under the "app" directory.
+
+#### 3- Build & Run
+
+
+### Code:
 Place the view in XML file.
 
 ```XML
