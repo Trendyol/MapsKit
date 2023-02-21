@@ -97,7 +97,7 @@ buildscript{
     }
     dependencies {
         // Add dependencies.
-        classpath 'com.huawei.agconnect:agcp:1.5.2.300'
+        classpath 'com.huawei.agconnect:agcp:1.8.0.300'
     }
 }
 ```
@@ -105,12 +105,34 @@ buildscript{
 ```
 dependencies {
     // Add dependencies.
-    implementation 'com.huawei.agconnect:agconnect-core:1.5.2.300'
+    implementation 'com.huawei.agconnect:agconnect-core:1.8.0.3000'
 }
 ...
 // Add the information to the bottom of the file.
 apply plugin: 'com.huawei.agconnect'
 
+```
+
+➡️ Configure the project-level settings.gradle file
+```
+pluginManagement { 
+    repositories { 
+        gradlePluginPortal() 
+        google() 
+        mavenCentral() 
+        // Configure the Maven repository address for the HMS Core SDK. 
+        maven { url 'https://developer.huawei.com/repo/' } 
+    } 
+} 
+dependencyResolutionManagement { 
+    ... 
+    repositories { 
+        google() 
+        mavenCentral() 
+        // Configure the Maven repository address for the HMS Core SDK. 
+        maven { url 'https://developer.huawei.com/repo/' } 
+    } 
+}
 ```
 
 ➡️ Follow the [codelab](https://developer.huawei.com/consumer/en/codelab/HMSMapKit/index.html#0), create the agconnect-services.json file and paste it under the "app" directory.
