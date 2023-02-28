@@ -29,59 +29,59 @@ dependencies {
 
 You'll still have to go through these steps at [HMS MapKit Codelab](https://developer.huawei.com/consumer/en/codelab/HMSMapKit/index.html#0) and [Google Add a map to your Android app](https://developers.google.com/codelabs/maps-platform/maps-platform-101-android#0)
 
-## Sample App Usage
+
+## 📌  Sample App Usage
 
 #### 1- Google Maps:
-Add a single line in local.properties that looks like
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Add a single line in local.properties that looks like
 ```GOOGLE_MAPS_API_KEY=YOUR_KEY```
 
 #### 2- Huawei Maps:
 
-Follow the [codelab](https://developer.huawei.com/consumer/en/codelab/HMSMapKit/index.html#0), create the agconnect-services.json file and paste it under the "app" directory.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow the [codelab](https://developer.huawei.com/consumer/en/codelab/HMSMapKit/index.html#0), create the agconnect-services.json file and paste it under the "app" directory.
 
 
 #### 3- Build & Run
 
 
-## Library Usage
+## 📌 Library Usage
 
-#### 1- Google Maps:
-You can integrate Google api key in 2 ways.
-- 📌 a) Secret Gradle
+### 1- Google Maps:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You can integrate Google api key in 2 ways:
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🅰️ AndroidManifest
 
-Advantage: You don't commit the api key directly to github repo.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ➡️ Add api key directly to AndroidManifest
+```XML
+<meta-data
+      android:name="com.google.android.geo.API_KEY"
+      android:value="YOUR_API_KEY" />
+```
 
-➡️ Add a single line in local.properties that looks like
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🅱️ Secret Gradle
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ➡️ Add a single line in local.properties that looks like
 ```GOOGLE_MAPS_API_KEY=YOUR_API_KEY```
 
-➡️ To be able to read this key from the AndroidManifest.xml,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ➡️ To be able to read this key from the AndroidManifest.xml;
 
-add this plugin in your app ```build.gradle```.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🛠 add this plugin in your app ```build.gradle```
 
 ```id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'```
 
-add this dependency in your project ```build.gradle```.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🛠 add this dependency in your project ```build.gradle```
 
 ```classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"```
 
-➡️ Read this GOOGLE_MAPS_API_KEY from AndroidManifest.xml
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ➡️ Read this GOOGLE_MAPS_API_KEY from AndroidManifest.xml
 ```XML    
 <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="${GOOGLE_MAPS_API_KEY}" />
+      android:name="com.google.android.geo.API_KEY"
+      android:value="${GOOGLE_MAPS_API_KEY}" />
 ```
-- 📌 b) AndroidManifest
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ⚡️ Advantage: You don't commit the api key directly to github repo.
 
-➡️ Add api key directly to AndroidManifest
-```XML    
-<meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
-```
 
-#### 2- Huawei Maps:
-➡️ Configure project-level build.gradle:
+### 2- Huawei Maps:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ➡️ Configure project-level build.gradle:
 ```
 allprojects {
     repositories {
@@ -101,7 +101,7 @@ buildscript{
     }
 }
 ```
-➡️ Configure app-level build.gradle:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ➡️ Configure app-level build.gradle:
 ```
 dependencies {
     // Add dependencies.
@@ -113,7 +113,7 @@ apply plugin: 'com.huawei.agconnect'
 
 ```
 
-➡️ Configure the project-level settings.gradle file
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ➡️ Configure the project-level settings.gradle file
 ```
 pluginManagement { 
     repositories { 
@@ -135,7 +135,7 @@ dependencyResolutionManagement {
 }
 ```
 
-➡️ Follow the [codelab](https://developer.huawei.com/consumer/en/codelab/HMSMapKit/index.html#0), create the agconnect-services.json file and paste it under the "app" directory.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ➡️ Follow the [codelab](https://developer.huawei.com/consumer/en/codelab/HMSMapKit/index.html#0), create the agconnect-services.json file and paste it under the "app" directory.
 
 #### 3- Build & Run
 
