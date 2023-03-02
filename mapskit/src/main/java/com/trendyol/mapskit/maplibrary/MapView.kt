@@ -136,10 +136,6 @@ class MapView : FrameLayout, Map, MapsLifeCycle {
         touchEventListener = null
     }
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        return super.onTouchEvent(event)
-    }
-
     override fun clear() {
         mapOperation.clear()
     }
