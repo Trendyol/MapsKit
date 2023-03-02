@@ -6,13 +6,13 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
-import com.trendyol.mapskit.maplibrary.listeners.MapsLifeCycle
 import com.trendyol.mapskit.maplibrary.listeners.IOnCameraIdleListener
 import com.trendyol.mapskit.maplibrary.listeners.IOnCameraMoveStartedListener
 import com.trendyol.mapskit.maplibrary.listeners.IOnMapClickListener
 import com.trendyol.mapskit.maplibrary.listeners.IOnMapLoadedCallback
 import com.trendyol.mapskit.maplibrary.listeners.IOnMapReadyCallback
 import com.trendyol.mapskit.maplibrary.listeners.IOnMarkerClickListener
+import com.trendyol.mapskit.maplibrary.listeners.MapsLifeCycle
 import com.trendyol.mapskit.maplibrary.model.CameraPosition
 import com.trendyol.mapskit.maplibrary.model.Marker
 import com.trendyol.mapskit.maplibrary.model.MarkerOptions
@@ -21,7 +21,11 @@ class MapView : FrameLayout, Map, MapsLifeCycle {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     private val availableService = AvailableServiceProvider.getAvailableService(context)
 
@@ -30,6 +34,8 @@ class MapView : FrameLayout, Map, MapsLifeCycle {
     } else {
         HuaweiMapsOperations(context)
     }
+
+    private var touchEventListener: ((MotionEvent?) -> Unit)? = null
 
     init {
         val view: View? = mapOperation.getMapView()
@@ -41,6 +47,7 @@ class MapView : FrameLayout, Map, MapsLifeCycle {
             MotionEvent.ACTION_UP -> parent.requestDisallowInterceptTouchEvent(false)
             MotionEvent.ACTION_DOWN -> parent.requestDisallowInterceptTouchEvent(true)
         }
+        touchEventListener?.invoke(ev)
         return super.dispatchTouchEvent(ev)
     }
 
@@ -119,6 +126,18 @@ class MapView : FrameLayout, Map, MapsLifeCycle {
 
     override fun addMarker(markerOptions: MarkerOptions, tag: Any?): Marker? {
         return mapOperation.addMarker(markerOptions, tag)
+    }
+
+    fun setTouchEventListener(touchEventListener: (MotionEvent?) -> Unit) {
+        this.touchEventListener = touchEventListener
+    }
+
+    fun clearTouchEventListener() {
+        touchEventListener = null
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        return super.onTouchEvent(event)
     }
 
     override fun clear() {
