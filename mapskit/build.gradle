@@ -47,7 +47,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.trendyol.mapskit'
                 artifactId = 'mapskit'
-                version = '1.2'
+                version = '1.3'
             }
         }
     }
