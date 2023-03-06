@@ -120,6 +120,10 @@ class MapView : FrameLayout, Map, MapsLifeCycle {
         mapOperation.setOnCameraMoveStartedListener(onCameraMoveStartedListener)
     }
 
+    override fun setOnZoomControlsListener(isZoomControlsEnabled: Boolean) {
+        mapOperation.setOnZoomControlsListener(isZoomControlsEnabled)
+    }
+
     override fun setLiteMode(isLiteModeEnabled: Boolean) {
         mapOperation.setLiteMode(isLiteModeEnabled)
     }

@@ -29,13 +29,13 @@ fun MarkerOptions.toGoogleMarkerOptions(): GoogleMarkerOptions =
     GoogleMarkerOptions()
         .position(position.toGoogleLatLng())
         .draggable(draggable)
-        .icon(GoogleBitmapDescription.fromBitmap(bitmap))
+        .apply { bitmap?.let { icon(GoogleBitmapDescription.fromBitmap(it)) } }
 
 fun MarkerOptions.toHuaweiMarkerOptions(): HuaweiMarkerOptions =
     HuaweiMarkerOptions()
         .position(position.toHuaweiLatLng())
         .draggable(draggable)
-        .icon(HuaweiBitmapDescription.fromBitmap(bitmap))
+        .apply { bitmap?.let { icon(HuaweiBitmapDescription.fromBitmap(it)) } }
 
 fun GoogleMarker.toMapsKitMarker(): Marker =
     Marker(
