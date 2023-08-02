@@ -34,8 +34,8 @@ class HuaweiMapsOperations(context: Context) :
     private var isLiteModeEnabled: Boolean? = null
 
     init {
-        mapView = MapView(context)
         MapsInitializer.initialize(context)
+        mapView = MapView(context)
     }
 
     override fun onMapReady(map: HuaweiMap) {
