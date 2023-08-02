@@ -10,13 +10,25 @@ android {
         enabled = true
     }
 
-    compileSdkVersion 33
+    compileSdkVersion 34
     buildToolsVersion "30.0.3"
 
+    signingConfigs {
+        release {
+            storeFile file('HmsDemo.jks')
+            keyAlias 'HmsDemo'
+            keyPassword 'Ez3712278'
+            storePassword 'Ez3712278'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+
     defaultConfig {
-        applicationId "com.trendyol.mapskitsample"
+        applicationId "com.trendyol.mock"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
 
@@ -25,8 +37,13 @@ android {
 
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.release
+            debuggable true
         }
     }
     compileOptions {
@@ -36,7 +53,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    namespace 'com.trendyol.mapskitsample'
+    namespace 'com.trendyol.mock'
 }
 
 dependencies {
@@ -47,7 +64,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
-    implementation 'com.huawei.agconnect:agconnect-core:1.8.0.300'
+    implementation 'com.huawei.agconnect:agconnect-core:1.8.1.300'
+    implementation "com.huawei.hms:maps:6.11.0.304"
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
