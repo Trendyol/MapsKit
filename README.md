@@ -38,8 +38,7 @@ You'll still have to go through these steps at [HMS MapKit Codelab](https://deve
 
 #### 2- Huawei Maps:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow the [codelab](https://developer.huawei.com/consumer/en/codelab/HMSMapKit/index.html#0), create the agconnect-services.json file and paste it under the "app" directory.
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow the [codelab](https://developer.huawei.com/consumer/en/codelab/HMSMapKit/index.html#0), create the agconnect-services.json file and paste it under the "app" directory. Please don't forget that while you are creating application, need to enter package name in Huawei Console. This package name is unique. If you have any agconnect-services.json file, you can add to correct place and make your application id same with your package name which is exist in your json file. It is just for run and test the application.
 
 #### 3- Build & Run
 
