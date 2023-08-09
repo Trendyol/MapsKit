@@ -74,7 +74,7 @@ You'll still have to go through these steps at [HMS MapKit Codelab](https://deve
 ```XML    
 <meta-data
       android:name="com.google.android.geo.API_KEY"
-      android:value="${GOOGLE_MAPS_API_KEY}" />
+      android:value="YOUR_GOOGLE_MAPS_API_KEY" />
 ```
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ⚡️ Advantage: You don't commit the api key directly to github repo.
 
