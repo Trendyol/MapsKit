@@ -11,6 +11,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.trendyol.mapskit.maplibrary.listeners.*
 import com.trendyol.mapskit.maplibrary.model.CameraPosition
+import com.trendyol.mapskit.maplibrary.model.LatLng
 import com.trendyol.mapskit.maplibrary.model.Marker
 import com.trendyol.mapskit.maplibrary.model.MarkerOptions
 
@@ -19,9 +20,9 @@ class GoogleMapsOperations(context: Context) :
     OnMapReadyCallback,
     MapsLifeCycle {
 
-    private lateinit var googleMap: GoogleMap
+    private var googleMap: GoogleMap? = null
     private var mapView: MapView? = null
-    private lateinit var onMapReadyListener: IOnMapReadyCallback
+    private var onMapReadyListener: IOnMapReadyCallback? = null
     private val cameraUpdateProvider = GoogleCameraUpdateProvider()
     private var isLiteModeEnabled: Boolean? = null
 
@@ -32,7 +33,7 @@ class GoogleMapsOperations(context: Context) :
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
         isLiteModeEnabled?.let { setLiteMode(it) }
-        onMapReadyListener.onMapReady(this)
+        onMapReadyListener?.onMapReady(this)
     }
 
     override fun getMapView(): View? {
@@ -49,98 +50,102 @@ class GoogleMapsOperations(context: Context) :
     }
 
     override fun setCompassEnabled(isCompassEnabled: Boolean) {
-        googleMap.uiSettings?.isCompassEnabled = isCompassEnabled
+        googleMap?.uiSettings?.isCompassEnabled = isCompassEnabled
     }
 
     override fun setAllGesturesEnabled(allGesturesEnabled: Boolean) {
-        googleMap.uiSettings?.setAllGesturesEnabled(allGesturesEnabled)
+        googleMap?.uiSettings?.setAllGesturesEnabled(allGesturesEnabled)
     }
 
     override fun setMyLocationButtonEnabled(isMyLocationButtonEnabled: Boolean) {
-        googleMap.uiSettings?.isMyLocationButtonEnabled = isMyLocationButtonEnabled
+        googleMap?.uiSettings?.isMyLocationButtonEnabled = isMyLocationButtonEnabled
     }
 
     @RequiresPermission(ACCESS_COARSE_LOCATION)
     override fun setMyLocationEnabled(isMyLocationEnabled: Boolean) {
-        googleMap.isMyLocationEnabled = isMyLocationEnabled
+        googleMap?.isMyLocationEnabled = isMyLocationEnabled
     }
 
     override fun setMinZoomPreference(zoomLevel: Float) {
-        googleMap.setMinZoomPreference(zoomLevel)
+        googleMap?.setMinZoomPreference(zoomLevel)
     }
 
     override fun getCameraPosition(): CameraPosition {
         return CameraPosition(
-            target = googleMap.cameraPosition.target.toMapsKitLatLng(),
-            zoom = googleMap.cameraPosition.zoom
+            target = googleMap?.cameraPosition?.target?.toMapsKitLatLng() ?: LatLng(
+                DEFAULT_LATITUDE,
+                DEFAULT_LONGITUDE
+            ),
+            zoom = googleMap?.cameraPosition?.zoom ?: ZOOM_LEVEL_STREET
         )
     }
 
     override fun setOnMapClickListener(onMapClickListener: IOnMapClickListener) {
-        googleMap.setOnMapClickListener { latLng -> onMapClickListener.onMapClick(latLng.toMapsKitLatLng()) }
+        googleMap?.setOnMapClickListener { latLng -> onMapClickListener.onMapClick(latLng.toMapsKitLatLng()) }
     }
 
     override fun animateCamera(cameraUpdate: CameraUpdate, duration: Int?) {
         val googleCameraUpdate = cameraUpdateProvider.provide(cameraUpdate)
         if (duration == null) {
-            googleMap.animateCamera(googleCameraUpdate)
+            googleMap?.animateCamera(googleCameraUpdate)
         } else {
-            googleMap.animateCamera(googleCameraUpdate, duration, null)
+            googleMap?.animateCamera(googleCameraUpdate, duration, null)
         }
     }
 
     override fun moveCamera(cameraUpdate: CameraUpdate) {
         val googleCameraUpdate = cameraUpdateProvider.provide(cameraUpdate)
-        googleMap.moveCamera(googleCameraUpdate)
+        googleMap?.moveCamera(googleCameraUpdate)
     }
 
     override fun setOnMarkerClickListener(onMarkerClickListener: IOnMarkerClickListener) {
-        googleMap.setOnMarkerClickListener {
+        googleMap?.setOnMarkerClickListener {
             onMarkerClickListener.onMarkerClick(it.toMapsKitMarker())
         }
     }
 
     override fun setOnMapLoadedCallback(onMapLoadedListener: IOnMapLoadedCallback) {
-        googleMap.setOnMapLoadedCallback {
+        googleMap?.setOnMapLoadedCallback {
             onMapLoadedListener.onMapLoaded()
         }
     }
 
     override fun setOnCameraIdleListener(onCameraIdleListener: IOnCameraIdleListener) {
-        googleMap.setOnCameraIdleListener {
+        googleMap?.setOnCameraIdleListener {
             onCameraIdleListener.onCameraIdle()
         }
     }
 
     override fun setOnCameraMoveStartedListener(onCameraMoveStartedListener: IOnCameraMoveStartedListener) {
-        googleMap.setOnCameraMoveStartedListener {
+        googleMap?.setOnCameraMoveStartedListener {
             val reason = MapCameraReason.of(it)
             onCameraMoveStartedListener.onCameraMoveStarted(reason)
         }
     }
 
     override fun addMarker(markerOptions: MarkerOptions, tag: Any?): Marker? {
-        val googleMarker = googleMap.addMarker(markerOptions.toGoogleMarkerOptions()) ?: return null
+        val googleMarker =
+            googleMap?.addMarker(markerOptions.toGoogleMarkerOptions()) ?: return null
         googleMarker.tag = tag
         googleMarker.title = markerOptions.title
         return googleMarker.toMapsKitMarker()
     }
 
     override fun setLiteMode(isLiteModeEnabled: Boolean) {
-        if (::googleMap.isInitialized) {
+        if (googleMap != null) {
             val options = GoogleMapOptions().liteMode(isLiteModeEnabled)
-            googleMap.mapType = options.mapType
+            googleMap?.mapType = options.mapType
         } else {
             this.isLiteModeEnabled = isLiteModeEnabled
         }
     }
 
     override fun setOnZoomControlsListener(isZoomControlsEnabled: Boolean) {
-        googleMap.uiSettings.isZoomControlsEnabled = isZoomControlsEnabled
+        googleMap?.uiSettings?.isZoomControlsEnabled = isZoomControlsEnabled
     }
 
     override fun clear() {
-        googleMap.clear()
+        googleMap?.clear()
     }
 
     override fun onSaveInstanceState(bundle: Bundle) {
@@ -169,5 +174,11 @@ class GoogleMapsOperations(context: Context) :
 
     override fun onLowMemory() {
         mapView?.onLowMemory()
+    }
+
+    companion object {
+        const val ZOOM_LEVEL_STREET = 18F
+        const val DEFAULT_LATITUDE = 41.046555
+        const val DEFAULT_LONGITUDE = 29.033402
     }
 }
