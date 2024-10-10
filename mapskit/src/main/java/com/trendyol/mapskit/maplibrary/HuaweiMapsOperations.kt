@@ -27,9 +27,9 @@ class HuaweiMapsOperations(context: Context) :
     OnMapReadyCallback,
     MapsLifeCycle {
 
-    private lateinit var huaweiMap: HuaweiMap
+    private var huaweiMap: HuaweiMap? = null
     private var mapView: MapView? = null
-    private lateinit var onMapReadyListener: IOnMapReadyCallback
+    private var onMapReadyListener: IOnMapReadyCallback? = null
     private val cameraUpdateProvider = HuaweiCameraUpdateProvider()
     private var isLiteModeEnabled: Boolean? = null
 
@@ -41,7 +41,7 @@ class HuaweiMapsOperations(context: Context) :
     override fun onMapReady(map: HuaweiMap) {
         huaweiMap = map
         isLiteModeEnabled?.let { setLiteMode(it) }
-        onMapReadyListener.onMapReady(this)
+        onMapReadyListener?.onMapReady(this)
     }
 
     override fun getMapView(): View? {
@@ -58,99 +58,103 @@ class HuaweiMapsOperations(context: Context) :
     }
 
     override fun setCompassEnabled(isCompassEnabled: Boolean) {
-        huaweiMap.uiSettings?.isCompassEnabled = isCompassEnabled
+        huaweiMap?.uiSettings?.isCompassEnabled = isCompassEnabled
     }
 
     override fun setAllGesturesEnabled(allGesturesEnabled: Boolean) {
-        huaweiMap.uiSettings?.setAllGesturesEnabled(allGesturesEnabled)
+        huaweiMap?.uiSettings?.setAllGesturesEnabled(allGesturesEnabled)
     }
 
     override fun setMyLocationButtonEnabled(isMyLocationButtonEnabled: Boolean) {
-        huaweiMap.uiSettings?.isMyLocationButtonEnabled = isMyLocationButtonEnabled
+        huaweiMap?.uiSettings?.isMyLocationButtonEnabled = isMyLocationButtonEnabled
     }
 
     @RequiresPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
     override fun setMyLocationEnabled(isMyLocationEnabled: Boolean) {
-        huaweiMap.isMyLocationEnabled = isMyLocationEnabled
+        huaweiMap?.isMyLocationEnabled = isMyLocationEnabled
     }
 
     override fun setMinZoomPreference(zoomLevel: Float) {
-        huaweiMap.setMinZoomPreference(zoomLevel)
+        huaweiMap?.setMinZoomPreference(zoomLevel)
     }
 
     override fun setOnMapClickListener(onMapClickListener: IOnMapClickListener) {
-        huaweiMap.setOnMapClickListener { latLng -> onMapClickListener.onMapClick(latLng.toMapsKitLatLng()) }
+        huaweiMap?.setOnMapClickListener { latLng -> onMapClickListener.onMapClick(latLng.toMapsKitLatLng()) }
     }
 
     override fun animateCamera(cameraUpdate: CameraUpdate, duration: Int?) {
         val huaweiCameraUpdate = cameraUpdateProvider.provide(cameraUpdate)
         if (duration == null) {
-            huaweiMap.animateCamera(huaweiCameraUpdate)
+            huaweiMap?.animateCamera(huaweiCameraUpdate)
         } else {
-            huaweiMap.animateCamera(huaweiCameraUpdate, duration, null)
+            huaweiMap?.animateCamera(huaweiCameraUpdate, duration, null)
         }
     }
 
     override fun moveCamera(cameraUpdate: CameraUpdate) {
         val huaweiCameraUpdate = cameraUpdateProvider.provide(cameraUpdate)
-        huaweiMap.moveCamera(huaweiCameraUpdate)
+        huaweiMap?.moveCamera(huaweiCameraUpdate)
     }
 
     override fun getCameraPosition(): CameraPosition {
-        val cameraPosition = huaweiMap.cameraPosition
+        val cameraPosition = huaweiMap?.cameraPosition
         return CameraPosition(
-            LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude),
-            cameraPosition.zoom
+            target = LatLng(
+                latitude = cameraPosition?.target?.latitude ?: DEFAULT_LATITUDE,
+                longitude = cameraPosition?.target?.longitude ?: DEFAULT_LONGITUDE
+            ),
+            zoom = cameraPosition?.zoom ?: ZOOM_LEVEL_STREET
         )
     }
 
     override fun setOnMarkerClickListener(onMarkerClickListener: IOnMarkerClickListener) {
-        huaweiMap.setOnMarkerClickListener {
+        huaweiMap?.setOnMarkerClickListener {
             onMarkerClickListener.onMarkerClick(it.toMapsKitMarker())
         }
     }
 
     override fun setOnMapLoadedCallback(onMapLoadedListener: IOnMapLoadedCallback) {
-        huaweiMap.setOnMapLoadedCallback {
+        huaweiMap?.setOnMapLoadedCallback {
             onMapLoadedListener.onMapLoaded()
         }
     }
 
     override fun setOnCameraIdleListener(onCameraIdleListener: IOnCameraIdleListener) {
-        huaweiMap.setOnCameraIdleListener {
+        huaweiMap?.setOnCameraIdleListener {
             onCameraIdleListener.onCameraIdle()
         }
     }
 
     override fun setOnCameraMoveStartedListener(onCameraMoveStartedListener: IOnCameraMoveStartedListener) {
-        huaweiMap.setOnCameraMoveStartedListener {
+        huaweiMap?.setOnCameraMoveStartedListener {
             val reason = MapCameraReason.of(it)
             onCameraMoveStartedListener.onCameraMoveStarted(reason)
         }
     }
 
     override fun setOnZoomControlsListener(isZoomControlsEnabled: Boolean) {
-        huaweiMap.uiSettings.isZoomControlsEnabled = isZoomControlsEnabled
+        huaweiMap?.uiSettings?.isZoomControlsEnabled = isZoomControlsEnabled
     }
 
     override fun addMarker(markerOptions: MarkerOptions, tag: Any?): Marker? {
-        val huaweiMarker = huaweiMap.addMarker(markerOptions.toHuaweiMarkerOptions()) ?: return null
+        val huaweiMarker =
+            huaweiMap?.addMarker(markerOptions.toHuaweiMarkerOptions()) ?: return null
         huaweiMarker.tag = tag
         huaweiMarker.title = markerOptions.title
         return huaweiMarker.toMapsKitMarker()
     }
 
     override fun setLiteMode(isLiteModeEnabled: Boolean) {
-        if (::huaweiMap.isInitialized) {
+        if (huaweiMap != null) {
             val options = HuaweiMapOptions().liteMode(isLiteModeEnabled)
-            huaweiMap.mapType = options.mapType
+            huaweiMap?.mapType = options.mapType
         } else {
             this.isLiteModeEnabled = isLiteModeEnabled
         }
     }
 
     override fun clear() {
-        huaweiMap.clear()
+        huaweiMap?.clear()
     }
 
     override fun onSaveInstanceState(bundle: Bundle) {
@@ -181,4 +185,9 @@ class HuaweiMapsOperations(context: Context) :
         mapView?.onLowMemory()
     }
 
+    companion object {
+        const val ZOOM_LEVEL_STREET = 18F
+        const val DEFAULT_LATITUDE = 41.046555
+        const val DEFAULT_LONGITUDE = 29.033402
+    }
 }
