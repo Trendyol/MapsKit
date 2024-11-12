@@ -1,0 +1,9 @@
+[versions]
+agp = "7.3.1"
+huaweiPlugin = "1.9.1.303"
+googleMapsPlugin = "2.0.1"
+
+[libraries]
+agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+huaweiPlugin = { module = "com.huawei.agconnect:agcp", version.ref = "huaweiPlugin" }
+googleMapsPlugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "googleMapsPlugin" }
