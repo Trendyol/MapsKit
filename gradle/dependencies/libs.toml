@@ -1,0 +1,12 @@
+[versions]
+googleMaps = "19.0.0"
+huaweiMaps = "6.11.2.301"
+huaweiAgConnect = "1.9.1.301"
+kotlinStd = "2.0.20"
+
+[libraries]
+googleMaps = { module = "com.google.android.gms:play-services-maps", version.ref = "googleMaps" }
+huaweiMaps = { module = "com.huawei.hms:maps", version.ref = "huaweiMaps" }
+huaweiAgConnect = { module = "com.huawei.agconnect:agconnect-core", version.ref = "huaweiAgConnect" }
+kotlinStd = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinStd" }
+kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinStd" }
