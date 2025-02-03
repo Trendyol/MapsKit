@@ -1,3 +1,5 @@
+
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/Trendyol/MapsKit/badge)](https://scorecard.dev/viewer/?uri=github.com/Trendyol/MapsKit)
 # MapsKit
 
 [![](https://jitpack.io/v/Trendyol/MapsKit.svg)](https://jitpack.io/#Trendyol/MapsKit)
